@@ -480,6 +480,7 @@ const Product = () => {
               deskripsi={product.description}
               harga={product.price}
               hargaJangkauan={product.priceJangkauan}
+              jangkauan={product.jangkauan}
               statusCustome={product.statusCustome}
               addToCart={() => addToCart(product)}
               addToCartCustome={()=> addToCartCustome(product)}

@@ -61,6 +61,7 @@ const CardItem = ({
   deskripsi,
   harga,
   hargaJangkauan,
+  jangkauan,
   statusCustome,
   fakultas,
   addToCart,
@@ -71,7 +72,7 @@ const CardItem = ({
   isInCartCustome,
 }) => {
   const [showInput, setShowInput] = useState(false); // State untuk mengontrol tampilan input
-  const [jangkauan, setJangkauan] = useState(""); // State untuk menyimpan jangkauan sewa
+  const [jangkauanCustome, setJangkauanCustome] = useState(""); // State untuk menyimpan jangkauan sewa
   const [statusPermintaan, setStatusPermintaan] = useState(statusCustome); // State untuk menyimpan statusCustome yang terupdate
 
   const db = getFirestore(); // Initialize Firestore
@@ -95,7 +96,7 @@ const CardItem = ({
   };
 
   const handleInputChange = (e) => {
-    setJangkauan(e.target.value);
+    setJangkauanCustome(e.target.value);
   };
 
   // const handleSaveJangkauan = async () => {
@@ -129,7 +130,7 @@ const CardItem = ({
   const handleSaveJangkauan = async () => {
     try {
       // Pastikan jangkauan dan hargaJangkauan adalah angka
-      const parsedJangkauan = parseFloat(jangkauan);
+      const parsedJangkauan = parseFloat(jangkauanCustome);
       const parsedHargaJangkauan = parseFloat(hargaJangkauan);
   
       // Periksa apakah parsing berhasil
@@ -142,7 +143,7 @@ const CardItem = ({
   
       const docRef = doc(db, "jangkauanCustomSewa", judul); // Use judul as document ID
       await setDoc(docRef, {
-        jangkauan: parsedJangkauan,
+        jangkauanCustome: parsedJangkauan,
         imageUrl,
         judul,
         deskripsi,
@@ -152,7 +153,7 @@ const CardItem = ({
         fakultas,
       });
       console.log("Deskripsi Jangkauan Sewa berhasil disimpan:", {
-        jangkauan: parsedJangkauan,
+        jangkauanCustome: parsedJangkauan,
         imageUrl,
         judul,
         deskripsi,
@@ -185,6 +186,13 @@ const CardItem = ({
         <p>Harga Sebulan</p>
         {hargaJangkauan && (
           <p className="text-red-600 text-base mt-2">{numberToRupiah(hargaJangkauan)}</p>
+        )}
+        <br/>
+        <p>Massa Sewa</p>
+        {jangkauan && (
+          <p className="text-gray-400 font-semibold text-base mt-2 uppercase">
+            {jangkauan}
+          </p>
         )}
         <br/>
         <p>Status Custome</p>
@@ -246,7 +254,7 @@ const CardItem = ({
             type="text"
             className="border rounded w-full py-2 px-3 text-gray-700"
             placeholder="Masukkan deskripsi jangkauan sewa"
-            value={jangkauan}
+            value={jangkauanCustome}
             onChange={handleInputChange}
           />
           <button
